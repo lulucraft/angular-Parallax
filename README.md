@@ -1,6 +1,6 @@
 # Responsive Background Image Parallax for Angular 7
 
-Download .ts file and copy into your project then use below div tag in your desire Html.
+Download .ts file and copy into your project then use below div tag in your Html.
 
 `<div appParallax imgSrc="path-to-your-image" imgHeight="70vh" bgSize="cover"></div>`
 
