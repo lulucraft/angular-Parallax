@@ -1,4 +1,4 @@
-# Background Image Parallax for Angular 7
+# Responsive Background Image Parallax for Angular 7
 
 Download .ts file and copy into your project then use below div tag in your desire Html.
 
