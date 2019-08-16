@@ -1,4 +1,4 @@
-import { Directive, OnInit, ElementRef, Input, Renderer2 } from '@angular/core';
+import { Directive, OnInit, ElementRef, Input, Renderer2, HostListener, } from '@angular/core';
 declare const $: any;
 
 @Directive({
@@ -8,38 +8,49 @@ declare const $: any;
 
 export class MyParallaxDirective implements OnInit {
     @Input() imgSrc: string;
-    @Input() imgHeight: string;
+    @Input() imgHeight: String = '70vh';
     @Input() bgPosition: String = '50% 0';
     @Input() bgSize: String = 'cover';
+    screenHeight: any;
+    screenWidth: any;
 
-    constructor(private renderer: Renderer2, private hostElement: ElementRef) {
+    constructor(private renderer: Renderer2, private hostElement: ElementRef) { }
 
-    }
+
+    @HostListener('window:resize', ['$event'])
+
 
     ngOnInit() {
         this.innit();
+        this.getScreenSize();
     }
-
+    getScreenSize(event?) {
+        this.screenWidth = window.innerWidth - 100;
+        const elem = this.hostElement.nativeElement;
+        if (this.screenWidth <= 1024) {
+            const $el = $(elem);
+            const x = Math.round((window.innerWidth / 16) * 9);
+            $el.css({ 'height': x + 'px' });
+        }
+    }
     innit() {
-        const element = this.hostElement.nativeElement;
-        this.renderer.setStyle(element, 'height', this.imgHeight);
-        this.renderer.setStyle(element, 'background-image', 'url' + '(' + this.imgSrc + ')');
-        this.renderer.setStyle(element, 'background-position', this.bgPosition);
-        this.renderer.setStyle(element, 'background-repeat', 'no-repeat');
-        this.renderer.setStyle(element, '-webkit-background-size', this.bgSize);
-        this.renderer.setStyle(element, 'background-size', this.bgSize);
-        this.renderer.setStyle(element, '-moz-transform', 'translate3d(0, 0, 0)');
-        this.renderer.setStyle(element, '-webkit-transform', 'translate3d(0, 0, 0)');
-        this.renderer.setStyle(element, 'transform', 'translate3d(0, 0, 0)');
+        const elem = this.hostElement.nativeElement;
+        this.renderer.setStyle(elem, 'height', this.imgHeight);
+        this.renderer.setStyle(elem, 'background-image', 'url' + '(' + this.imgSrc + ')');
+        this.renderer.setStyle(elem, 'background-position', this.bgPosition);
+        this.renderer.setStyle(elem, 'background-repeat', 'no-repeat');
+        this.renderer.setStyle(elem, '-webkit-background-size', this.bgSize);
+        this.renderer.setStyle(elem, 'background-size', this.bgSize);
+        this.renderer.setStyle(elem, '-moz-transform', 'translate3d(0, 0, 0)');
+        this.renderer.setStyle(elem, '-webkit-transform', 'translate3d(0, 0, 0)');
+        this.renderer.setStyle(elem, 'transform', 'translate3d(0, 0, 0)');
 
         $(function () {
-            const $el = $(element);
+            const $el = $(elem);
             $(window).on('scroll', function () {
                 const scroll = $(document).scrollTop();
                 $el.css({
-
                     'background-position': '50% ' + (-.4 * scroll) + 'px',
-
                 });
             });
         });
