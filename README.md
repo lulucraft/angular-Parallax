@@ -6,7 +6,7 @@ Download .ts file and copy into your project then use below div tag in your Html
 
 
 # Options
-User below options in your html tag
+Use below options in your html tag
 
 imgSrc // path to your image
 
