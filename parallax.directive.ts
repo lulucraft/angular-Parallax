@@ -11,8 +11,7 @@ import * as $ from 'jquery';
     selector: '[appParallax]'
 })
 
-
-export class MyParallaxDirective implements OnInit {
+export class ParalaxDirective implements OnInit {
     @Input() imgSrc: string = '';
     @Input() imgHeight: String = '70vh';
     @Input() bgPosition: String = '50% 0';
@@ -28,6 +27,7 @@ export class MyParallaxDirective implements OnInit {
         this.init();
         this.getScreenSize();
     }
+
     getScreenSize() {
         this.screenWidth = window.innerWidth - 100;
         const elem = this.hostElement.nativeElement;
@@ -37,6 +37,7 @@ export class MyParallaxDirective implements OnInit {
             $el.css({ 'height': x + 'px' });
         }
     }
+
     init() {
         const elem = this.hostElement.nativeElement;
         this.renderer.setStyle(elem, 'height', this.imgHeight);
@@ -60,4 +61,5 @@ export class MyParallaxDirective implements OnInit {
             });
         });
     }
+
 }
