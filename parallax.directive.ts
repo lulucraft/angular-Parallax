@@ -1,5 +1,11 @@
+/**
+ * 
+ * Code from https://github.com/JubinSaniei/angular-Parallax developed by JubinSaniei
+ * 
+ */
+
 import { Directive, OnInit, ElementRef, Input, Renderer2, HostListener, } from '@angular/core';
-declare const $: any;
+import * as $ from 'jquery';
 
 @Directive({
     selector: '[appParallax]'
@@ -7,7 +13,7 @@ declare const $: any;
 
 
 export class MyParallaxDirective implements OnInit {
-    @Input() imgSrc: string;
+    @Input() imgSrc: string = '';
     @Input() imgHeight: String = '70vh';
     @Input() bgPosition: String = '50% 0';
     @Input() bgSize: String = 'cover';
@@ -16,15 +22,13 @@ export class MyParallaxDirective implements OnInit {
 
     constructor(private renderer: Renderer2, private hostElement: ElementRef) { }
 
-
     @HostListener('window:resize', ['$event'])
 
-
     ngOnInit() {
-        this.innit();
+        this.init();
         this.getScreenSize();
     }
-    getScreenSize(event?) {
+    getScreenSize() {
         this.screenWidth = window.innerWidth - 100;
         const elem = this.hostElement.nativeElement;
         if (this.screenWidth <= 1024) {
@@ -33,7 +37,7 @@ export class MyParallaxDirective implements OnInit {
             $el.css({ 'height': x + 'px' });
         }
     }
-    innit() {
+    init() {
         const elem = this.hostElement.nativeElement;
         this.renderer.setStyle(elem, 'height', this.imgHeight);
         this.renderer.setStyle(elem, 'background-image', 'url' + '(' + this.imgSrc + ')');
@@ -49,8 +53,9 @@ export class MyParallaxDirective implements OnInit {
             const $el = $(elem);
             $(window).on('scroll', function () {
                 const scroll = $(document).scrollTop();
+                if (!scroll) return;//added
                 $el.css({
-                    'background-position': '50% ' + (-.4 * scroll) + 'px',
+                    'background-position': '50% ' + (-.4 * scroll + 2) + 'px',
                 });
             });
         });
